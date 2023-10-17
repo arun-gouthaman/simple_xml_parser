@@ -162,7 +162,7 @@ Node* XmlParser::parse_to_node(const std::string& xml_content)
             bool is_closed = is_close_tag(tag, tag_vec.back());
             if(is_closed)
             {
-                // if proper close tag found, remove last irem from tag vector
+                // if proper close tag found, remove last item from tag vector
                 tag_vec.pop_back();
                 // clear tag string
                 tag.clear();

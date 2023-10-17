@@ -29,8 +29,11 @@ class DoubleLinkNode
     Node* end_node = new Node();
     Node* insert_node(const std::string key, const std::string val, Node* prev_node = nullptr);
     void traverse(Node* node);
-    void traverse_breadth(Node* node);
-
+    void reset_nodes()
+    {
+        begin_node = nullptr;
+        end_node = nullptr;
+    }
     Node* get_begin_node()
     {
         return begin_node;

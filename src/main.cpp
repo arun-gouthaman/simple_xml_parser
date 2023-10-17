@@ -17,14 +17,14 @@ int main()
 {
     std::string file_location = __FILE__;
     file_location = file_location.substr(0, file_location.rfind("\\"));
-    std::cout << file_location << "\n";
+
     std::string simple_xml = file_location + "//sample.xml";
     std::string comp_xml = file_location + "//complex_sample.xml";
 
-    std::cout << "Simple\n";
+    std::cout << simple_xml << "\n";
     process_xml_file(simple_xml);
-    std::cout << "\n\n\n";
-    std::cout << "Complex\n";
+
+    std::cout << std::string(2, '\n') << comp_xml << "\n";
     process_xml_file(comp_xml);
     return 0;
 }

@@ -7,3 +7,7 @@ navigate to cloned folder
 ```mkdir build; cd build```
 
 ```cmake .. -G "Visual Studio 16 2019"```
+
+compiling code
+
+```msbuild .\<solutuion_file>.sln /p:Configuration=RelWithDebInfo```

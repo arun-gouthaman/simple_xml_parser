@@ -15,8 +15,11 @@ void process_xml_file(std::string file_path)
 
 int main()
 {
-    std::string simple_xml = "C://my_files//CPP//xml_parser//src//sample.xml";
-    std::string comp_xml = "C://my_files//CPP//xml_parser//src//complex_sample.xml";
+    std::string file_location = __FILE__;
+    file_location = file_location.substr(0, file_location.rfind("\\"));
+    std::cout << file_location << "\n";
+    std::string simple_xml = file_location + "//sample.xml";
+    std::string comp_xml = file_location + "//complex_sample.xml";
 
     std::cout << "Simple\n";
     process_xml_file(simple_xml);

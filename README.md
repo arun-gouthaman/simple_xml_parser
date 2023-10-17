@@ -5,4 +5,5 @@ install cmake (https://cmake.org/download/)
 navigate to cloned folder
 
 ```mkdir build; cd build```
+
 ```cmake .. -G "Visual Studio 16 2019"```

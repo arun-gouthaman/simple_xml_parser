@@ -5,9 +5,9 @@
 
 struct Node
 {
+    std::vector<Node*> next_node = {};
     Node* prev_node = nullptr;
     std::string key = std::string("");
-    std::vector<Node*> next_node = {};
     std::string val = std::string("");
     int length = 0;
 };

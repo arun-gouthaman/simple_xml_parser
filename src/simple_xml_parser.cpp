@@ -41,7 +41,7 @@ void DoubleLinkNode::traverse(Node* begin)
     int indent = begin->length * 2;
     std::cout << std::string(indent, ' ');
     std::cout << begin->key;
-    if (begin->val.size()>0)
+    if (!begin->val.empty())
     {
         std::cout << " : " << begin->val;
     }
@@ -95,7 +95,7 @@ Node* XmlParser::parse_to_node(const std::string& xml_content)
     Node* cur_node = new Node();
     cur_node = nullptr;
     std::string tag_name;
-    if (xml_content.size() < 1)
+    if (xml_content.empty())
     {
         std::cout << "No xml content read\n";
         return nullptr;

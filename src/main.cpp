@@ -23,14 +23,14 @@ int main()
     std::string nasa_xml = file_location + "//nasa.xml";
 
 
-    std::cout << simple_xml << "\n";
-    process_xml_file(simple_xml);
+    //std::cout << simple_xml << "\n";
+    //process_xml_file(simple_xml);
 
-    std::cout << std::string(2, '\n') << comp_xml << "\n";
-    process_xml_file(comp_xml);
+    //std::cout << std::string(2, '\n') << comp_xml << "\n";
+    //process_xml_file(comp_xml);
 
     // Test xml file obtained online
-    //process_xml_file(nasa_xml);
+    process_xml_file(nasa_xml);
 
 
     return 0;

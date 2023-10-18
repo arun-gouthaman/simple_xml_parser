@@ -131,7 +131,6 @@ Node* XmlParser::parse_to_node(const std::string& xml_content)
             // Self closing tag
             if (tag.back() == '/')
             {
-                //std::cout << tag << " : " << cur_line << "\n";
                 double_link_node.insert_node(tag, value, cur_node);
                 tag.clear();
                 value.clear();
@@ -226,6 +225,12 @@ Node* XmlParser::parse_to_node(const std::string& xml_content)
             }
             value.push_back(c);
         }
+    }
+    // Check for closed tags
+    if (!tag_vec.empty())
+    {
+        std::cout << "Tags not closed\nTags remaining:" << tag_vec.size();
+        return nullptr;
     }
     // if begin node if valid, return begin_node else return nullptr
     return double_link_node.begin_node ? double_link_node.begin_node : nullptr;

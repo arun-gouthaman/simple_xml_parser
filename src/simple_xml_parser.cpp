@@ -66,14 +66,14 @@ std::string XmlParser::read_file(const std::string& file_path)
     {
         std::string line;
         std::getline(xml_file, line);
-        file_contents += line;
+        file_contents += line+"\n";
     }
     xml_file.close();
     return file_contents;
 }
 
 // Check if the tag read is close tag comparing with open tag at the end of vector
-bool XmlParser::is_close_tag(const std::string& cur_tag, const std::string& open_tag)
+inline bool XmlParser::is_close_tag(const std::string& cur_tag, const std::string& open_tag)
 {
     if((cur_tag.length() != open_tag.length()+1) ||
        (cur_tag[0] != '/') ||
@@ -95,6 +95,7 @@ Node* XmlParser::parse_to_node(const std::string& xml_content)
     Node* cur_node = new Node();
     cur_node = nullptr;
     std::string tag_name;
+    int cur_line = 1;
     if (xml_content.empty())
     {
         std::cout << "No xml content read\n";
@@ -104,6 +105,12 @@ Node* XmlParser::parse_to_node(const std::string& xml_content)
     // Iterate through the string and parse to node
     for(char c : xml_content)
     {
+        //std::cout << "CUR LINE: " << cur_line << "\n";
+        if (c == '\n')
+        {
+            ++cur_line;
+            continue;
+        }
         // check for tag beginning
         if(c == '<')
         {
@@ -118,14 +125,26 @@ Node* XmlParser::parse_to_node(const std::string& xml_content)
         }
 
         // Check for tag ending
-        if(c == '>')
+        if(c == '>' && !tag.empty())
         {
             bracket_open = false;
+
+            // Self closing tag
+            if (tag.back() == '/')
+            {
+                //std::cout << tag << " : " << cur_line << "\n";
+                double_link_node.insert_node(tag, value, cur_node);
+                tag.clear();
+                value.clear();
+                tag_name.clear();
+                continue;
+            }
 
             // if tag vector is empty and a close tag is encountered return with error message
             if (tag[0] == '/' && tag_vec.empty())
             {
-                std::cout << "Open close tag mismatch at " << tag << "\n";
+                std::cout << "Open close tag mismatch at " << tag << "\nline: " << cur_line << "\n";
+                std::cout << tag_vec.back() << "\n";
                 double_link_node.reset_nodes();
                 return nullptr;
             }
@@ -163,6 +182,11 @@ Node* XmlParser::parse_to_node(const std::string& xml_content)
             if(is_closed)
             {
                 // if proper close tag found, remove last item from tag vector
+                if (tag_vec.empty())
+                {
+                    std::cout << "Line: " << cur_line << "\n" << "Tag vector empty" << "\n";
+                    return nullptr;
+                }
                 tag_vec.pop_back();
                 // clear tag string
                 tag.clear();
@@ -175,7 +199,8 @@ Node* XmlParser::parse_to_node(const std::string& xml_content)
             }
             else
             {
-                std::cout << "Open close tag mismatch at " << tag << "\n";
+                std::cout << "Open close tag mismatch at " << tag << "\nline: " << cur_line << "\n";
+                std::cout << tag_vec.back() << "\n";
                 double_link_node.reset_nodes();
                 return nullptr;
             }
@@ -195,7 +220,7 @@ Node* XmlParser::parse_to_node(const std::string& xml_content)
 
         if(!bracket_open)
         {
-            // skip whitespaces for tag names
+            // skip trailing whitespaces for value names
             if (value.empty() && c == ' ')
             {
                 continue;

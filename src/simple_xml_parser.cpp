@@ -105,7 +105,6 @@ Node* XmlParser::parse_to_node(const std::string& xml_content)
     // Iterate through the string and parse to node
     for(char c : xml_content)
     {
-        //std::cout << "CUR LINE: " << cur_line << "\n";
         if (c == '\n')
         {
             ++cur_line;
